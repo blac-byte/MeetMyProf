@@ -1,6 +1,6 @@
 1. User
    User is where all the users(teacher, student) are stored initailly along with their emails and hashed passwords.
-<br>
+   <br>
    | id | email                                   | hashed_password | role    | is_active |
    |----|-----------------------------------------|-----------------------|---------|-----------|
    | 1  | blac.byte2025@vitstudent.ac.in | pbk                   | student | 1         |
