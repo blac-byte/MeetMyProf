@@ -1,5 +1,6 @@
 1. User
-   User is where all the users(teacher, student) are stored initailly along with their emails and hashed passwords. 
+   User is where all the users(teacher, student) are stored initailly along with their emails and hashed passwords.
+   <br>
    | id | email                                   | hashed_password | role    | is_active |
    |----|-----------------------------------------|-----------------------|---------|-----------|
    | 1  | blac.byte2025@vitstudent.ac.in | pbk                   | student | 1         |
@@ -9,7 +10,7 @@
    - role - ENUM of student, teacher
    - is_active - boolean value
 <br>
-2. Student 
+3. Student 
 
 | reg_id | user_id | batch | email                                   |
 |--------|---------|-------|-----------------------------------------|
