@@ -2,7 +2,7 @@
 
 from flask import request, Blueprint, url_for, redirect, render_template
 from flask_login import login_required, current_user
-from ..models import student, course, time, classes
+from ..models import Student, Teacher, Course, Time, Classes
 from app import db
 
 bp=Blueprint('parser', __name__)
@@ -76,8 +76,8 @@ def parser_check():
 
                  
 
-        time.query.delete()  
-        classes.query.delete()
+        Time.query.delete()  
+        Classes.query.delete()
         #
         #
         # Right now all the time and course tables are getting dropped
@@ -98,13 +98,13 @@ def parser_check():
 
         column_id=0
         for slot in theory_timing:
-          db.session.add(time(user_id, column_id, slot['start'], slot['end'], 'ETH'))
+          db.session.add(Time(user_id, column_id, slot['start'], slot['end'], 'ETH'))
           column_id+=1
         db.session.commit()
 
         column_id=0
         for slot in lab_timing:
-          db.session.add(time(user_id, column_id, slot['start'], slot['end'], 'ELA'))
+          db.session.add(Time(user_id, column_id, slot['start'], slot['end'], 'ELA'))
           column_id+=1
         db.session.commit()
 
@@ -115,7 +115,7 @@ def parser_check():
           for part in theory[day]:
                if part.count('-')>1:
                     parts=part.split('-')
-                    db.session.add(classes(user_id, parts[1], parts[2], day, column_id))
+                    db.session.add(Classes(user_id, parts[1], parts[2], day, column_id))
                column_id+=1
         db.session.commit()
 
@@ -125,9 +125,9 @@ def parser_check():
                if part.count('-')>1:  
                     parts=part.split('-')
                     if parts[2]=='LO':
-                         db.session.add(classes(user_id, parts[1],'ELA', day, column_id))
+                         db.session.add(Classes(user_id, parts[1],'ELA', day, column_id))
                     else:
-                         db.session.add(classes(user_id, parts[1], parts[2], day, column_id))
+                         db.session.add(Classes(user_id, parts[1], parts[2], day, column_id))
                column_id+=1
         db.session.commit()
 

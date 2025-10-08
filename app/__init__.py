@@ -19,17 +19,19 @@ def create_app(config_class="app.config.Config"):
     # Initialize extensions with app
     db.init_app(app)
     login_manager.init_app(app)
-    login_manager.login_view = "signin" #------------- redirects here if not logged in
+    login_manager.login_view = "auth.signin" #------------- redirects here if not logged in
+
+
+    # Import models so db.create_all() knows them
+    from app.models import User, Student, Time, Course, Classes, Teacher
+    with app.app_context():
+        db.create_all()
+        Course.insert_sample_courses() 
 
     @login_manager.user_loader
     def load_user(user_id):
-        return student.query.get(int(user_id))
-
-    # Import models so db.create_all() knows them
-    from app.models import student, time, course, classes
-    with app.app_context():
-        db.create_all()
-        course.insert_sample_courses() 
+        return User.query.get((user_id))
+        
 
     # Register blueprints (routes)
     from app.routes.auth import bp as main_routes

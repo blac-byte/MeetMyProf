@@ -1,8 +1,10 @@
 # app/models/__init__.py
-from .student import student
-from .time import time
-from .classes import classes
-from .course import course
+from .user import User
+from .student import Student
+from .time import Time
+from .classes import Classes
+from .course import Course
+from .teacher import Teacher
 
 
-__all__ = ["student", "time", "classes", "course"]
+__all__ = ["User", "Student", "Teacher", "Time", "Classes", "Course"]

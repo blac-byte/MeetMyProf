@@ -1,32 +1,35 @@
 {% extends 'base.html' %}
-{% block head %}{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dashboard/style.css') }}">
+{% endblock %}
 
 
 
 {% block content %}
 
-{% if session.schedule %}
-  <table border="1" cellpadding="5" cellspacing="0">
+<h2>Today's Schedule ({{ abbreviated_day_name }})</h2>
+
+<table>
     <thead>
-      <tr>
-        <th>Start Time</th>
-        <th>End Time</th>
-        <th>Course ID</th>
-      </tr>
+        <tr>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Course ID</th>
+        </tr>
     </thead>
     <tbody>
-      {% for item in session.schedule %}
-      <tr>
-        <td>{{ item.start }}</td>
-        <td>{{ item.end }}</td>
-        <td>{{ item.course_id }}</td>
-      </tr>
-      {% endfor %}
+        {% for start, end, course_id in schedule %}
+        <tr>
+            <td>{{ start }}</td>
+            <td>{{ end }}</td>
+            <td>{{ course_id }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="3">No classes scheduled for today.</td></tr>
+        {% endfor %}
     </tbody>
-  </table>
-{% else %}
-  <p>No schedule data available.</p>
-{% endif %}
+</table>
+
 
 
 {% endblock %}

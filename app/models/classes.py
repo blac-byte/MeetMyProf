@@ -3,7 +3,7 @@
 from .. import db
 
 
-class classes(db.Model):
+class Classes(db.Model):
     id=db.Column(db.Integer, primary_key=True, autoincrement=True)
     reg_id=db.Column(db.Integer, db.ForeignKey('student.reg_id'))                 
     course_id=db.Column(db.String(20), nullable=False) #             for now, change in future
@@ -11,7 +11,7 @@ class classes(db.Model):
     day=db.Column(db.String(3))
     column_id=db.Column(db.Integer)
 
-    student = db.relationship('student', backref='classes')
+    student = db.relationship('Student', backref='classes')
 
 
     def __init__(self, reg_id, course_id, course_type, day, column_id):
