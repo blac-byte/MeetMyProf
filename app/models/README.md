@@ -3,11 +3,11 @@
    | id | email                                   | hashed_password | role    | is_active |
    |----|-----------------------------------------|-----------------------|---------|-----------|
    | 1  | blac.byte2025@vitstudent.ac.in | pbk                   | student | 1         |
-id - auto incremented primary key
-email - only accepts vit domain email
-hashed_password - stored only hashed+salted password. This is only a VIEW
-role - ENUM of student, teacher
-is_active - boolean value
+   - id - auto incremented primary key
+   - email - only accepts vit domain email
+   - hashed_password - stored only hashed+salted password. This is only a VIEW
+   - role - ENUM of student, teacher
+   - is_active - boolean value
 <br>
 2. Student 
 
