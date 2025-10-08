@@ -1,4 +1,4 @@
-- User
+1. User
    User is where all the users(teacher, student) are stored initailly along with their emails and hashed passwords. 
    | id | email                                   | hashed_password | role    | is_active |
    |----|-----------------------------------------|-----------------------|---------|-----------|
