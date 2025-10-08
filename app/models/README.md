@@ -5,9 +5,10 @@
 4. Course
 5. Time
 6. Classes
-Here is a detailed breakdown of the [Models folder](app/models/README.md)
+
 
    - User
+     <br>
      *User* is the common database table where all the users(teacher, student) are initially stored. They are then referenced from the User table and written into their respective tables.
      
       | id | email                                   | hashed_password | role    | is_active |
@@ -20,6 +21,7 @@ Here is a detailed breakdown of the [Models folder](app/models/README.md)
      is_active - boolean value
    
    - Student (notice the email format)
+     Admin controlled table. Has no write interaction from the program.
      | reg_id | user_id | batch | email                                   |
      |--------|---------|-------|-----------------------------------------|
      | 1      | 1       | ALL03  | blac.byte2025@vitstudent.ac.in |
@@ -35,6 +37,7 @@ Here is a detailed breakdown of the [Models folder](app/models/README.md)
      | 1      | 1       | ALL03  | blac.byte@vit.ac.in |  
      
    - Course
+     <br>
      Course contains all the courses offered by the institute. Admin controlled table. Has no write interaction from the program.
       | id | course_id | course_type | batch | building | room |
       |----|-----------|-------------|-------|----------|------|
@@ -49,6 +52,7 @@ Here is a detailed breakdown of the [Models folder](app/models/README.md)
       | 9  | BAEEE101  | ELA         | ALL03 | PRP      | 355  |
 
    - Time
+     <br>
      Shows how the day is divided into slots. The time is stored in 24 hour system. 
      This table is assumed to be universal for the institute.
       | id  | reg_id | column_id | start | end   | course_type |
@@ -79,6 +83,7 @@ Here is a detailed breakdown of the [Models folder](app/models/README.md)
       | 24 | 1      | 11        | 18:31 | 19:20 | ELA         |
 
    - Classes
+     <br>
      Classes shows the different classes of the user. This column matches the timing of the classes using the column_id which is just the index of the time slot so from 0-11 which when            matched with the time database table gives the proper time.
       | id  | reg_id | course_id | course_type | day  | column_id |
       |-----|--------|-----------|-------------|------|-----------|
