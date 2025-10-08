@@ -6,12 +6,14 @@
 5. Time
 6. Classes
 
-   User
-   | id | email                                   | hashed_password | role    | is_active |
-   |----|-----------------------------------------|-----------------------|---------|-----------|
-   | 1  | blac.byte2025@vitstudent.ac.in | pbk                   | student | 1         |
+   - User
+     *User* is the common database table where all the users(teacher, student) are initially stored. They are then referenced from the User table and written into their respective tables.
+     
+      | id | email                                   | hashed_password | role    | is_active |
+      |----|-----------------------------------------|-----------------------|---------|-----------|
+      | 1  | blac.byte2025@vitstudent.ac.in | pbk                   | student | 1         |
 
-   *User* is the common database table where all the users(teacher, student) are initially stored. They are then referenced from the User table and written into their respective tables
+   
    
    - Student (notice the email format)
      | reg_id | user_id | batch | email                                   |
