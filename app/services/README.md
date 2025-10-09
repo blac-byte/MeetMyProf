@@ -9,7 +9,7 @@ The folder has different files
    parser.py is the file that parses through the copy pasted timetable in the textarea.
 1. schedule.py
    schedule.py does the query for the present day's schedule.
-   ```python filename=python
+   ```python 
        results = (
         db.session.query(time_alias.start, time_alias.end, Classes.course_id)
         .select_from(Student)
