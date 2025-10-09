@@ -13,16 +13,7 @@ MeetMyProf is a web application designed to simplify and enhance the process of 
 88     `8'     88   `"Ybbd8"'   `"Ybbd8"'    "Y888  88     `8'     88      Y88'     88           88           `"YbbdP"'    88     
                                                                            d8'                                                    
                                                                           d8'
-
-ooo        ooooo                         .   ooo        ooooo             ooooooooo.                       .o88o. 
-`88.       .888'                       .o8   `88.       .888'             `888   `Y88.                     888 `" 
- 888b     d'888   .ooooo.   .ooooo.  .o888oo  888b     d'888  oooo    ooo  888   .d88' oooo d8b  .ooooo.  o888oo  
- 8 Y88. .P  888  d88' `88b d88' `88b   888    8 Y88. .P  888   `88.  .8'   888ooo88P'  `888""8P d88' `88b  888    
- 8  `888'   888  888ooo888 888ooo888   888    8  `888'   888    `88..8'    888          888     888   888  888    
- 8    Y     888  888    .o 888    .o   888 .  8    Y     888     `888'     888          888     888   888  888    
-o8o        o888o `Y8bod8P' `Y8bod8P'   "888" o8o        o888o     .8'     o888o        d888b    `Y8bod8P' o888o   
-                                                              .o..P'                                              
-                                                              `Y8P'                                                                                        
+                                                                                     
 ```
                                                                                                                         
 ## File structure
