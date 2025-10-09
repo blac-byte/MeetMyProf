@@ -10,7 +10,9 @@ The models folder contains all the db tables used in the web app.
 
 
    - User
+   - 
      User is the common database table where all the users(teacher, student) are initially stored. They are then referenced from the User table and written into their respective tables.
+  
      
       | id | email                                   | hashed_password | role    | is_active |
       |----|-----------------------------------------|-----------------------|---------|-----------|
@@ -25,6 +27,7 @@ The models folder contains all the db tables used in the web app.
    - Student (notice the email format)
      
      Admin controlled table. Has no write interaction from the program.
+  
      
      | reg_id | user_id | batch | email                                   |
      |--------|---------|-------|-----------------------------------------|
@@ -37,12 +40,14 @@ The models folder contains all the db tables used in the web app.
 
    - Teacher (notice the differece in the email format)
      Admin controlled table. Has no write interaction from the program.
+  
      
      | reg_id | user_id | batch | email                                   |
      |--------|---------|-------|-----------------------------------------|
      | 1      | 1       | ALL03  | blac.byte@vit.ac.in |  
      
    - Course
+     
      Course contains all the courses offered by the institute. Admin controlled table. Has no write interaction from the program.
      
       | id | course_id | course_type | batch | building | room |
@@ -58,7 +63,7 @@ The models folder contains all the db tables used in the web app.
       | 9  | BAEEE101  | ELA         | ALL03 | PRP      | 355  |
 
    - Time
-   - 
+     
      Shows how the day is divided into slots. The time is stored in 24 hour system. 
      This table is assumed to be universal for the institute.
      
@@ -90,6 +95,7 @@ The models folder contains all the db tables used in the web app.
       | 24 | 1      | 11        | 18:31 | 19:20 | ELA         |
 
    - Classes
+     
      Classes shows the different classes of the user. This column matches the timing of the classes using the column_id which is just the index of the time slot so from 0-11 which when            matched with the time database table gives the proper time.
      
       | id  | reg_id | course_id | course_type | day  | column_id |
