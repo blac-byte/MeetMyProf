@@ -1,5 +1,5 @@
 # MeetMyProf
-The web app MeetMyProf asprires to streamline the student teacher appointment process by providing a one stop solution to scheduling and appointment bookings.
+MeetMyProf is a web application designed to simplify and enhance the process of scheduling appointments between students and teachers. It provides a seamless, all-in-one platform for booking and managing appointments, ensuring a smooth and effortless experience for every user.
 
 ## File structure
 app
