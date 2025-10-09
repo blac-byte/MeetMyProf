@@ -2,6 +2,7 @@
 MeetMyProf is a web application designed to simplify and enhance the process of scheduling appointments between students and teachers. It provides a seamless, all-in-one platform for booking and managing appointments, ensuring a smooth and effortless experience for every user.
 
 ## File structure
+```
 app
 ├── __pycache__
 ├── [models](app/models/README.md)
@@ -22,6 +23,7 @@ app
 ├── raw.txt
 ├── requirements.txt
 └── run.py
+```
 
 Here is a detailed breakdown of the [Models](app/models/README.md) folder
 
