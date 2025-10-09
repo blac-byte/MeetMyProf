@@ -7,7 +7,7 @@ The models folder contains all the db tables used in the web app.
 4. Course
 5. Time
 6. Classes
-
+---
 
    - User
      
@@ -23,7 +23,7 @@ The models folder contains all the db tables used in the web app.
      hashed_password - stores only hashed+salted passwords, this is only a VIEW
      role - enum between student and teacher
      is_active - boolean value
-   
+---   
    - Student (notice the email format)
      
      Admin controlled table. Has no write interaction from the program.
@@ -37,7 +37,7 @@ The models folder contains all the db tables used in the web app.
      user_id - foreign key from User
      batch - taken from the parsed timetable and updated
      email - only accepts vit domain email
-
+---
    - Teacher (notice the differece in the email format)
      Admin controlled table. Has no write interaction from the program.
   
@@ -45,7 +45,7 @@ The models folder contains all the db tables used in the web app.
      | reg_id | user_id | batch | email                                   |
      |--------|---------|-------|-----------------------------------------|
      | 1      | 1       | ALL03  | blac.byte@vit.ac.in |  
-     
+ ---    
    - Course
      
      Course contains all the courses offered by the institute. Admin controlled table. Has no write interaction from the program.
@@ -61,7 +61,7 @@ The models folder contains all the db tables used in the web app.
       | 7  | BACHY105  | ELA         | ALL03 | PRP      | G07  |
       | 8  | BACSE103  | ELA         | ALL03 | PRP      | 356  |
       | 9  | BAEEE101  | ELA         | ALL03 | PRP      | 355  |
-
+---
    - Time
      
      Shows how the day is divided into slots. The time is stored in 24 hour system. 
@@ -93,7 +93,7 @@ The models folder contains all the db tables used in the web app.
       | 22 | 1      | 9         | 16:41 | 17:30 | ELA         |
       | 23 | 1      | 10        | 17:40 | 18:30 | ELA         |
       | 24 | 1      | 11        | 18:31 | 19:20 | ELA         |
-
+---
    - Classes
      
      Classes shows the different classes of the user. This column matches the timing of the classes using the column_id which is just the index of the time slot so from 0-11 which when            matched with the time database table gives the proper time.
