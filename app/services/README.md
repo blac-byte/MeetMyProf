@@ -11,6 +11,7 @@ The folder has different files
 1. schedule.py
    schedule.py does the query for the present day's schedule.
    
+   #### **`python`**
    ```python 
        results = (
         db.session.query(time_alias.start, time_alias.end, Classes.course_id)
