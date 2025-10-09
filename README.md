@@ -1,5 +1,6 @@
 # MeetMyProf
 MeetMyProf is a web application designed to simplify and enhance the process of scheduling appointments between students and teachers. It provides a seamless, all-in-one platform for booking and managing appointments, ensuring a smooth and effortless experience for every user.
+```
           _____                    _____                    _____                _____                    _____                _____                    _____                    _____                   _______                   _____          
          /\    \                  /\    \                  /\    \              /\    \                  /\    \              |\    \                  /\    \                  /\    \                 /::\    \                 /\    \         
         /::\____\                /::\    \                /::\    \            /::\    \                /::\____\             |:\____\                /::\    \                /::\    \               /::::\    \               /::\    \        
@@ -21,7 +22,7 @@ MeetMyProf is a web application designed to simplify and enhance the process of 
         /:::/    /              \:::\____\               \:::\____\                                     /:::/    /                                                            \::|   |                  \::/____/                                 
         \::/    /                \::/    /                \::/    /                                     \::/    /                                                              \:|   |                   ~~                                       
          \/____/                  \/____/                  \/____/                                       \/____/                                                                \|___|                                                            
-                                                                                                                                                                                                                                              
+```
 ## File structure
 ```
 app
