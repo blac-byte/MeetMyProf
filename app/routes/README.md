@@ -10,9 +10,11 @@
 
 
 1. dashboard
+   
    Just a route to load the dashboard.html
 
 
 1. logout
+   
    Logs out user
    
