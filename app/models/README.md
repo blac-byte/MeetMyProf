@@ -39,6 +39,7 @@ The models folder contains all the db tables used in the web app.
      email - only accepts vit domain email
 ---
    - Teacher (notice the differece in the email format)
+   - 
      Admin controlled table. Has no write interaction from the program.
   
      
