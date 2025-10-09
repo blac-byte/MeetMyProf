@@ -10,7 +10,7 @@ The models folder contains all the db tables used in the web app.
 
 
    - User
-   - 
+     
      User is the common database table where all the users(teacher, student) are initially stored. They are then referenced from the User table and written into their respective tables.
   
      
