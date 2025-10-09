@@ -19,9 +19,13 @@ The models folder contains all the db tables used in the web app.
    | 1  | blac.byte2025@vitstudent.ac.in | pbk                   | student | 1         |
   
   id - auto incremented primary key
+  
   email - only accepts vit domain email
+  
   hashed_password - stores only hashed+salted passwords, this is only a VIEW
+  
   role - enum between student and teacher
+  
   is_active - boolean value
 ---   
 - Student (notice the email format)
@@ -34,8 +38,11 @@ The models folder contains all the db tables used in the web app.
   | 1      | 1       | ALL03  | blac.byte2025@vitstudent.ac.in |
   
   reg_id - auto incremented primary key for now
+  
   user_id - foreign key from User
+  
   batch - taken from the parsed timetable and updated
+  
   email - only accepts vit domain email
 ---
 - Teacher (notice the differece in the email format)
