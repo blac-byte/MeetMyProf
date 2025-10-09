@@ -1,4 +1,6 @@
 ## Models
+The models folder contains all the db tables used in the web app.
+
 1. User
 2. Student
 3. Teacher
@@ -8,12 +10,12 @@
 
 
    - User
-     <br>
      *User* is the common database table where all the users(teacher, student) are initially stored. They are then referenced from the User table and written into their respective tables.
      
       | id | email                                   | hashed_password | role    | is_active |
       |----|-----------------------------------------|-----------------------|---------|-----------|
       | 1  | blac.byte2025@vitstudent.ac.in | pbk                   | student | 1         |
+     
      id - auto incremented primary key
      email - only accepts vit domain email
      hashed_password - stores only hashed+salted passwords, this is only a VIEW
@@ -22,9 +24,11 @@
    
    - Student (notice the email format)
      Admin controlled table. Has no write interaction from the program.
+     
      | reg_id | user_id | batch | email                                   |
      |--------|---------|-------|-----------------------------------------|
      | 1      | 1       | ALL03  | blac.byte2025@vitstudent.ac.in |
+     
      reg_id - auto incremented primary key for now
      user_id - foreign key from User
      batch - taken from the parsed timetable and updated
@@ -32,13 +36,14 @@
 
    - Teacher (notice the differece in the email format)
      Admin controlled table. Has no write interaction from the program.
+     
      | reg_id | user_id | batch | email                                   |
      |--------|---------|-------|-----------------------------------------|
      | 1      | 1       | ALL03  | blac.byte@vit.ac.in |  
      
    - Course
-     <br>
      Course contains all the courses offered by the institute. Admin controlled table. Has no write interaction from the program.
+     
       | id | course_id | course_type | batch | building | room |
       |----|-----------|-------------|-------|----------|------|
       | 1  | BAEEE101  | ETH         | ALL03 | PRP      | 105  |
@@ -52,9 +57,10 @@
       | 9  | BAEEE101  | ELA         | ALL03 | PRP      | 355  |
 
    - Time
-     <br>
+   - 
      Shows how the day is divided into slots. The time is stored in 24 hour system. 
      This table is assumed to be universal for the institute.
+     
       | id  | reg_id | column_id | start | end   | course_type |
       |-----|--------|-----------|-------|-------|-------------|
       | 1  | 1      | 0         | 08:00 | 08:50 | ETH         |
@@ -83,8 +89,8 @@
       | 24 | 1      | 11        | 18:31 | 19:20 | ELA         |
 
    - Classes
-     <br>
      Classes shows the different classes of the user. This column matches the timing of the classes using the column_id which is just the index of the time slot so from 0-11 which when            matched with the time database table gives the proper time.
+     
       | id  | reg_id | course_id | course_type | day  | column_id |
       |-----|--------|-----------|-------------|------|-----------|
       | 1   | 1      | BAEEE101  | ETH         | MON  | 6         |
