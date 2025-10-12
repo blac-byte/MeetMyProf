@@ -1,35 +1,316 @@
 {% extends 'base.html' %}
+
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='dashboard/style.css') }}">
+  <title>Dashboard</title>
+  <style>
+    :root {
+      --primary: #2c3e50;
+      --accent: #3498db;
+      --background: #f5f6fa;
+      --card-bg: #ffffff;
+      --text: #2d3436;
+      --muted: #888;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background-color: var(--background);
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: var(--primary);
+      color: white;
+      height: 100vh;
+      padding: 20px;
+      transition: width 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      z-index: 1;
+    }
+
+    .sidebar.collapsed {
+      width: 60px;
+    }
+
+    .sidebar h2 {
+      font-size: 20px;
+      margin: 0 0 20px 0;
+      white-space: nowrap;
+      overflow: hidden;
+      transition: opacity 0.2s;
+    }
+
+    .sidebar.collapsed h2,
+    .sidebar.collapsed a {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .sidebar a {
+      display: block;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+
+    .sidebar a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex-grow: 1;
+      padding: 0;
+      overflow-y: auto;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Upload Banner */
+    .dashboard-banner-wrapper {
+      margin: 0;
+      padding: 0;
+      height: 180px;
+      width: 100%;
+    }
+
+    .upload-banner {
+      width: 100%;
+      height: 100%;
+      background-color: var(--card-bg);
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .upload-banner input {
+      display: none;
+    }
+
+    .upload-message {
+      text-align: center;
+      color: var(--text);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .upload-icon {
+      font-size: 28px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .upload-text {
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .upload-info {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .preview-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .dashboard-inner {
+      padding: 30px 40px;
+    }
+
+    .dashboard-inner h2 {
+      margin-top: 0;
+    }
+
+    /* Schedule Cards */
+    .schedule-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .schedule-card {
+      background-color: var(--card-bg);
+      padding: 16px 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.2s;
+    }
+
+    .schedule-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .card-item {
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .card-item.course {
+      font-weight: 600;
+    }
+  </style>
 {% endblock %}
 
-
-
 {% block content %}
+<!-- Sidebar -->
+<div class="sidebar collapsed" id="sidebar">
+  <h2>Dashboard</h2>
+  <a href="#">🏠 Home</a>
+  <a href="#">📊 Analytics</a>
+  <a href="#">📁 Projects</a>
+  <a href="#">🧑‍💼 Team</a>
+  <a href="#">⚙️ Settings</a>
+  <a href="#">🚪 Logout</a>
+</div>
 
-<h2>Today's Schedule ({{ abbreviated_day_name }})</h2>
+<!-- Main Content -->
+<div class="main-content">
 
-<table>
-    <thead>
-        <tr>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Course ID</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for start, end, course_id in schedule %}
-        <tr>
-            <td>{{ start }}</td>
-            <td>{{ end }}</td>
-            <td>{{ course_id }}</td>
-        </tr>
-        {% else %}
-        <tr><td colspan="3">No classes scheduled for today.</td></tr>
-        {% endfor %}
-    </tbody>
-</table>
+  <!-- Upload Banner -->
+  <div class="dashboard-banner-wrapper">
+    <label class="upload-banner" id="drop-area">
+      <div class="upload-message" id="uploadMessage">
+        <div class="upload-icon">🖼️</div>
+        <div class="upload-text">Click or drag to upload banner</div>
+        <div class="upload-info">JPG, PNG, GIF — Max 5MB</div>
+      </div>
+      <input type="file" id="fileElem" accept="image/*">
+      <div id="errorMsg" class="error"></div>
+    </label>
+  </div>
 
+  <!-- Inner Dashboard Content -->
+  <div class="dashboard-inner">
+    <h2>Welcome back!</h2>
+    <p style="color: var(--muted); margin-bottom: 20px;">
+      Here's your schedule for <strong>{{ abbreviated_day_name }}</strong>:
+    </p>
 
+    <!-- Schedule Cards -->
+    <div class="schedule-container">
+      {% for start, end, course_id in schedule %}
+      <div class="schedule-card">
+        <div class="card-item">{{ start }} – {{ end }}</div>
+        <div class="card-item course">{{ course_id }}</div>
+      </div>
+      {% else %}
+      <div class="schedule-card">
+        <div class="card-item">No classes scheduled today.</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
 
+</div>
+
+<!-- Scripts -->
+<script>
+  // Image Upload Preview
+  const dropArea = document.getElementById('drop-area');
+  const fileInput = document.getElementById('fileElem');
+  const uploadMessage = document.getElementById('uploadMessage');
+  const errorMsg = document.getElementById('errorMsg');
+  let currentPreview = null;
+  const MAX_SIZE_MB = 5;
+
+  dropArea.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', handleFiles);
+
+  ['dragenter', 'dragover'].forEach(eventName => {
+    dropArea.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      dropArea.classList.add('dragover');
+    });
+  });
+
+  ['dragleave', 'drop'].forEach(eventName => {
+    dropArea.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      dropArea.classList.remove('dragover');
+    });
+  });
+
+  dropArea.addEventListener('drop', (e) => {
+    const files = e.dataTransfer.files;
+    handleFiles({ target: { files } });
+  });
+
+  function handleFiles(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    errorMsg.textContent = '';
+    const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    if (!validTypes.includes(file.type)) {
+      errorMsg.textContent = 'Unsupported file type.';
+      return;
+    }
+
+    if (file.size > MAX_SIZE_MB * 1024 * 1024) {
+      errorMsg.textContent = 'File too large. Max size is 5MB.';
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      if (currentPreview) currentPreview.remove();
+      uploadMessage.style.display = 'none';
+
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.className = 'preview-img';
+      dropArea.appendChild(img);
+      currentPreview = img;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Sidebar hover expand/collapse
+  const sidebar = document.getElementById('sidebar');
+
+  sidebar.addEventListener('mouseenter', () => {
+    sidebar.classList.remove('collapsed');
+  });
+
+  sidebar.addEventListener('mouseleave', () => {
+    sidebar.classList.add('collapsed');
+  });
+</script>
 {% endblock %}

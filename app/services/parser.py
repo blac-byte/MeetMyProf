@@ -133,6 +133,6 @@ def parser_check():
 
 
 
-        return render_template('redirect_to_schedule.html')
+        return redirect(url_for('dashboard.dashboard'))
 
     return redirect(url_for('auth.signin'))

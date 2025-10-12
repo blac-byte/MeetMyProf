@@ -17,9 +17,6 @@ bp = Blueprint('auth', __name__)
 @bp.route("/", methods=["GET", "POST"])
 def signup():
 
-    if current_user.is_authenticated:
-        return redirect(url_for('parser.parser'))
-
 ##### Maybe add a token system where upon the click of the proceed button
 ##### an email is sent to the user to verify the user is the owner of the account
 
@@ -32,6 +29,10 @@ def signup():
     
     # only triggers this if after cllicking the PROCEED button
     if request.method=='POST':
+
+        if current_user.is_authenticated:
+            return redirect(url_for('dashboard.dashboard'))
+
         email=request.form.get('email').strip().lower()
         password=request.form.get('password')
 
@@ -87,7 +88,7 @@ def signin():
 
         # If the user data is cached in the browser auto logs the user in
         if current_user.is_authenticated:
-             return redirect(url_for('parser.parser'))
+             return redirect(url_for('dashboard.dashboard'))
         
         # If not cached
         email=request.form.get('email').strip().lower()
@@ -97,10 +98,7 @@ def signin():
         # Authentication of user happens here with user and hashed password
         if user and user.check_password(password):
             login_user(user)
-            print(f"Logging in: {user}, type: {type(user)}")
-            login_user(user)
-
-            return redirect(url_for('parser.parser'))
+            return redirect(url_for('dashboard.dashboard'))
 
         # If invalid gets redirected to the same page
         else:

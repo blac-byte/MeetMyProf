@@ -8,4 +8,4 @@ bp=Blueprint('logout', __name__)
 @login_required
 def logout():
         logout_user()
-        return redirect(url_for('signin'))#---------------add flash here
+        return redirect(url_for('auth.signin'))#---------------add flash here

@@ -1,20 +1,14 @@
 # app/services/schedule.py
 
 from app import db
-from flask import Blueprint, redirect, session, render_template
-from flask_login import current_user, login_required
+from flask_login import current_user
 from ..models import Student, Classes, Time
 from sqlalchemy.orm import aliased
 from sqlalchemy import and_
 from datetime import date
 
 
-
-bp=Blueprint('schedule', __name__)
-
-@bp.route('/schedule', methods=['POST'])
-@login_required
-def schedule():
+def get_todays_schedule():
     user_id=current_user.get_id()
     today = date.today()
     abbreviated_day_name = today.strftime("%a").upper()
@@ -38,7 +32,5 @@ def schedule():
         .all()
     )
 
-    # storing the query in session
-    print(results)
 
-    return render_template('dashboard.html', schedule=results, abbreviated_day_name=abbreviated_day_name)
+    return results, abbreviated_day_name

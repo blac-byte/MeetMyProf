@@ -42,8 +42,12 @@ def create_app(config_class="app.config.Config"):
     app.register_blueprint(parser)
 
     # Register blueprints (services)
-    from app.services.schedule import bp as schedule
-    app.register_blueprint(schedule)
+    from app.routes.dashboard import bp as dashboard
+    app.register_blueprint(dashboard)
+
+    # Register blueprints (routes)
+    from app.routes.logout import bp as logout
+    app.register_blueprint(logout)
 
     # Error handlers
     from app.utils.errors import register_error_handlers
