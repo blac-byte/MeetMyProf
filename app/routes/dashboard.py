@@ -9,5 +9,11 @@ bp=Blueprint('dashboard', __name__)
 @bp.route('/dashboard', methods=['GET','POST'])
 @login_required
 def dashboard():
-    todays_schedule, abbreviated_day_name = get_todays_schedule()
-    return render_template('dashboard.html', schedule = todays_schedule, abbreviated_day_name = abbreviated_day_name)
+    schedule=session.get('schedule')
+    abbreviated_day_name = session.get("abbreviated_day_name")
+    
+    if not schedule or not abbreviated_day_name:
+        get_todays_schedule()
+        return render_template('dashboard.html', schedule = session.get('schedule',[]), abbreviated_day_name = session.get("abbreviated_day_name"))
+    
+    return render_template('dashboard.html', schedule = session.get('schedule',[]), abbreviated_day_name = abbreviated_day_name)

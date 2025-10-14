@@ -23,7 +23,7 @@ def create_app(config_class="app.config.Config"):
 
 
     # Import models so db.create_all() knows them
-    from app.models import User, Student, Time, Course, Classes, Teacher
+    from app.models import User, Student, Time, Course, Classes, Teacher, Booking, Slot
     with app.app_context():
         db.create_all()
         Course.insert_sample_courses() 
@@ -44,6 +44,10 @@ def create_app(config_class="app.config.Config"):
     # Register blueprints (services)
     from app.routes.dashboard import bp as dashboard
     app.register_blueprint(dashboard)
+
+    # Register blueprints (routes)
+    from app.services.booking import bp as booking
+    app.register_blueprint(booking)
 
     # Register blueprints (routes)
     from app.routes.logout import bp as logout

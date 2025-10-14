@@ -2,14 +2,16 @@
 
 from app import db
 from flask_login import current_user
-from ..models import Student, Classes, Time
+from ..models import Classes, Time,User
 from sqlalchemy.orm import aliased
 from sqlalchemy import and_
 from datetime import date
-
+from flask import session
+import json
 
 def get_todays_schedule():
     user_id=current_user.get_id()
+    print(user_id)
     today = date.today()
     abbreviated_day_name = today.strftime("%a").upper()
 
@@ -17,20 +19,29 @@ def get_todays_schedule():
     time_alias = aliased(Time)
 
     # queries the db using the system date, probably change to a more accurate system later
-    results = (
+    query_result = (
         db.session.query(time_alias.start, time_alias.end, Classes.course_id)
-        .select_from(Student)
-        .join(Classes, Student.reg_id == Classes.reg_id)
+        .select_from(User)
+        .join(Classes, User.id == Classes.user_id)
         .join(time_alias, and_(
             time_alias.column_id == Classes.column_id,
             time_alias.course_type == Classes.course_type
         ))
         .filter(    
-            Student.reg_id == int(user_id),
+            User.id == int(user_id),
             Classes.day == abbreviated_day_name
         )
         .all()
     )
 
+    print(query_result)
 
-    return results, abbreviated_day_name
+    formatted_sessions = [
+        {"start": start, "end": end, "course_code": code}
+        for start, end, code in query_result
+    ]
+
+
+    session["schedule"] = formatted_sessions
+    session["abbreviated_day_name"] = abbreviated_day_name
+    return

@@ -2,7 +2,7 @@
 
 from flask import request, Blueprint, url_for, redirect, render_template
 from flask_login import login_required, current_user
-from ..models import Student, Teacher, Course, Time, Classes
+from ..models import Student, Teacher, Course, Time, Classes, Slot
 from app import db
 
 bp=Blueprint('parser', __name__)
@@ -22,6 +22,7 @@ def parser_check():
     
     if request.method=='POST':
         user_id=current_user.get_id()
+        role=current_user.role
         theory={}
         lab={}
         theory_timing=[]
@@ -36,6 +37,7 @@ def parser_check():
         rows=raw_text.splitlines()
         for row in rows:
             part=row.split('\t')
+          #we need to remove edit to the 'time' table
             if part[0]=='THEORY' and part[1]=='Start':
                  # ['08:00', '09:00', '10:00', '11:00', '12:00', '-', 'Lunch', '14:00', '15:00', '16:00', '17:00', '18:00', '18:51', '19:01']
                  theory_start=part[2:]
@@ -52,7 +54,7 @@ def parser_check():
                  # ['08:50', '09:40', '10:40', '11:30', '12:30', '13:20', 'Lunch', '14:50', '15:40', '16:40', '17:30', '18:30', '19:20', '-']
                  lab_end=part[1:]
 
-            elif part[0] in ['MON','TUE','WED','THU','FRI','SAT','SUN']:
+            if part[0] in ['MON','TUE','WED','THU','FRI','SAT','SUN']:
                  day=part[0]
                  theory[day] = [item for item in part[2:] if item != 'Lunch']
                  # ['A1', 'F1', 'D1', 'TB1', 'TG1', '-', 'Lunch', 'A2-BAEEE101-ETH-PRP105-ALL03', 'F2', 'D2-BACSE103-ETH-PRP105-ALL03', 'TB2-BAMAT101-ETH-PRP105-ALL03', 'TG2-BACHY105-ETH-PRP105-ALL03', '-', 'V3']
@@ -76,16 +78,16 @@ def parser_check():
 
                  
 
-        Time.query.delete()  
-        Classes.query.delete()
+     #    Time.query.delete()  
+     #    Classes.query.delete()
         #
         #
         # Right now all the time and course tables are getting dropped
         # but in the future that would be changed and checks would be placed for
         # edit functionality
         #
-        db.session.commit()
-        db.session.commit()
+     #    db.session.commit()
+     #    db.session.commit()
 
 
         for start, end in zip(theory_start, theory_end): 
@@ -114,8 +116,15 @@ def parser_check():
           column_id=0
           for part in theory[day]:
                if part.count('-')>1:
+                    
                     parts=part.split('-')
-                    db.session.add(Classes(user_id, parts[1], parts[2], day, column_id))
+                    # db.session.add(Slot(slot_id=parts[0], day=day))
+                    # db.session.commit()
+                    db.session.add(Classes(user_id, parts[1], parts[2], day, column_id, parts[0], role))
+                    continue
+               
+               # db.session.add(Slot(slot_id=part, day=day))
+               # db.session.commit()
                column_id+=1
         db.session.commit()
 
@@ -124,10 +133,16 @@ def parser_check():
           for part in lab[day]:
                if part.count('-')>1:  
                     parts=part.split('-')
+                    # db.session.add(Slot(slot_id=parts[0], day=day))
+                    # db.session.commit()
                     if parts[2]=='LO':
-                         db.session.add(Classes(user_id, parts[1],'ELA', day, column_id))
+                         db.session.add(Classes(user_id, parts[1],'ELA', day, column_id, parts[0], role))
+                         continue
                     else:
-                         db.session.add(Classes(user_id, parts[1], parts[2], day, column_id))
+                         db.session.add(Classes(user_id, parts[1], parts[2], day, column_id, parts[0], role))
+                         continue
+               # db.session.add(Slot(slot_id=part, day=day))
+               # db.session.commit()
                column_id+=1
         db.session.commit()
 
