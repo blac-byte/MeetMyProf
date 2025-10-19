@@ -42,4 +42,31 @@ SUN	THEORY	V10	Y11	Y12	X11	X12	-	Lunch	Y21	Z21	X21	W21	W22	-	V11
 LAB	L83	L84	L85	L86	L87	L88	Lunch	L89	L90	L91	L92	L93	L94	-
 
 
+{'MON': [{'day': 'MON', 'start': '15:00', 'end': '15:50', 'course_type': 'BAEEE101'}, 
+{'day': 'MON', 'start': '17:00', 'end': '17:50', 'course_type': 'BACSE103'}, 
+{'day': 'MON', 'start': '18:00', 'end': '18:50', 'course_type': 'BAMAT101'}, 
+{'day': 'MON', 'start': '18:51', 'end': '19:00', 'course_type': 'BACHY105'}, 
+{'day': 'MON', 'start': '09:51', 'end': '10:40', 'course_type': 'BAMAT101'}, 
+{'day': 'MON', 'start': '10:41', 'end': '11:30', 'course_type': 'BAMAT101'}], 
 
+'TUE': [{'day': 'TUE', 'start': '15:00', 'end': '15:50', 'course_type': 'BAMAT101'}, 
+{'day': 'TUE', 'start': '16:00', 'end': '16:50', 'course_type': 'BACHY105'}, 
+{'day': 'TUE', 'start': '08:00', 'end': '08:50', 'course_type': 'BACSE101'}, 
+{'day': 'TUE', 'start': '08:51', 'end': '09:40', 'course_type': 'BACSE101'}], 
+
+'WED': [{'day': 'WED', 'start': '16:00', 'end': '16:50', 'course_type': 'BAEEE101'}, 
+{'day': 'WED', 'start': '18:00', 'end': '18:50', 'course_type': 'BACSE103'}, 
+{'day': 'WED', 'start': '08:00', 'end': '08:50', 'course_type': 'BACHY105'}, 
+{'day': 'WED', 'start': '08:51', 'end': '09:40', 'course_type': 'BACHY105'}, 
+{'day': 'WED', 'start': '09:51', 'end': '10:40', 'course_type': 'BACSE103'}, 
+{'day': 'WED', 'start': '10:41', 'end': '11:30', 'course_type': 'BACSE103'}], 
+
+'THU': [{'day': 'THU', 'start': '15:00', 'end': '15:50', 'course_type': 'BACSE103'}, 
+{'day': 'THU', 'start': '16:00', 'end': '16:50', 'course_type': 'BAMAT101'}, 
+{'day': 'THU', 'start': '17:00', 'end': '17:50', 'course_type': 'BACHY105'}], 
+
+'FRI': [{'day': 'FRI', 'start': '17:00', 'end': '17:50', 'course_type': 'BAEEE101'}, 
+{'day': 'FRI', 'start': '08:00', 'end': '08:50', 'course_type': 'BAEEE101'}, 
+{'day': 'FRI', 'start': '08:51', 'end': '09:40', 'course_type': 'BAEEE101'}, 
+{'day': 'FRI', 'start': '09:51', 'end': '10:40', 'course_type': 'BACSE101'}, 
+{'day': 'FRI', 'start': '10:41', 'end': '11:30', 'course_type': 'BACSE101'}]}

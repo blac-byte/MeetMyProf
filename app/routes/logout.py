@@ -1,3 +1,5 @@
+# app/routes/logout.py
+
 from flask import flash, redirect, url_for, Blueprint, session
 from flask_login import login_required, logout_user
 

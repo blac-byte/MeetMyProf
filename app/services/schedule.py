@@ -4,21 +4,17 @@ from app import db
 from ..models import Classes, Time,User
 from sqlalchemy.orm import aliased
 from sqlalchemy import and_
-from datetime import date
-from flask import session
+from collections import defaultdict
 
 def get_todays_schedule(user_id):
-    today = date.today()
-    abbreviated_day_name = today.strftime("%a").upper()
-
-
+    
     time_alias = aliased(Time)
 
-    # queries the db using the system date, probably change to a more accurate system later
+    # queries the db for the entire week!
 
-    # this query function could also be used to get the teacher schedule
+    # this query function is used for both dashboard and booking pages
     query_result = (
-        db.session.query(time_alias.start, time_alias.end, Classes.course_id)
+        db.session.query(Classes.day, time_alias.start, time_alias.end, Classes.course_id)
         .select_from(User)
         .join(Classes, User.id == Classes.user_id)
         .join(time_alias, and_(
@@ -26,20 +22,25 @@ def get_todays_schedule(user_id):
             time_alias.course_type == Classes.course_type
         ))
         .filter(    
-            User.id == int(user_id),
-            Classes.day == abbreviated_day_name
+            User.id == int(user_id)
         )
         .all()
     )
 
 
-    formatted_sessions = [
-        {"day": abbreviated_day_name, "start": start, "end": end, "course_code": code}
-        for start, end, code in query_result
-    ]
-
-
-    session["schedule"] = formatted_sessions
-    session["abbreviated_day_name"] = abbreviated_day_name
+    grouped_schedule = defaultdict(list)
+    for day, start, end, course_type in query_result:
+        grouped_schedule[day].append({
+            'day': day,
+            'start': start,
+            'end': end,
+            'course_code': course_type
+        })
     
-    return formatted_sessions
+
+    grouped_schedule=dict(grouped_schedule)
+    # the code below since schedule.py doesn't have any keys : 'SAT' , 'SUN'
+    # and since those are blank in the actual timetable we just give placeholder values
+    grouped_schedule['SAT'],grouped_schedule['SUN']=[],[]
+
+    return grouped_schedule 
