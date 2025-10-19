@@ -2,10 +2,9 @@
 
 from flask import request, Blueprint, url_for, redirect, render_template
 from flask_login import login_required, current_user
-from ..models import Student, Teacher, Course, Time, Classes, Slot
+from ..models import Student, Teacher, Course, Time, Classes, Slot, User
 from app import db
-from sqlalchemy.orm import aliased
-from sqlalchemy import and_
+from ..services.schedule import get_todays_schedule
 
 
 bp=Blueprint('booking', __name__)
@@ -13,17 +12,17 @@ bp=Blueprint('booking', __name__)
 @bp.route('/booking', methods=['GET','POST'])
 @login_required
 def booking():
+    if request.method=='POST':
+        teacher_name=request.form.get('teacher_name')
+        department=request.form.get('department')
 
+        teacher_id=db.session.query(User.id).filter_by(name=teacher_name, role='teacher').first()
 
-
-
-
-    for slot, course_id, user_id in result:
-        print(slot.slot_id, course_id, user_id)
-
-
+        if teacher_id:
+            teacher_id=teacher_id[0]
+            teacher_schedule = get_todays_schedule(teacher_id)
+        print(teacher_schedule)
 
     return render_template('booking.html')
-
 
     

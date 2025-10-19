@@ -2,7 +2,6 @@
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_user, current_user
-from werkzeug.security import check_password_hash as hash_check
 from app.utils.errors import is_student_email, is_teacher_email
 from ..models import User, Student, Teacher
 from .. import db
@@ -32,7 +31,7 @@ def signup():
 
 
     
-    # only triggers this if after cllicking the PROCEED button
+    # only triggers this if the proceed button is clicked
     if request.method=='POST':
         
         email=request.form.get('email').strip().lower()

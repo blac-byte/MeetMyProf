@@ -1,9 +1,11 @@
 # app/services/parser.py
 
-from flask import request, Blueprint, url_for, redirect, render_template
+from flask import request, Blueprint, url_for, redirect, render_template, flash
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from flask_login import login_required, current_user
 from ..models import Student, Teacher, Course, Time, Classes, Slot
 from app import db
+from ..utils.errors import register_error_handlers
 
 bp=Blueprint('parser', __name__)
 
@@ -22,7 +24,6 @@ def parser_check():
     
     if request.method=='POST':
         user_id=current_user.get_id()
-        role=current_user.role
         theory={}
         lab={}
         theory_timing=[]
@@ -39,20 +40,21 @@ def parser_check():
             part=row.split('\t')
           #we need to remove edit to the 'time' table
             if part[0]=='THEORY' and part[1]=='Start':
-                 # ['08:00', '09:00', '10:00', '11:00', '12:00', '-', 'Lunch', '14:00', '15:00', '16:00', '17:00', '18:00', '18:51', '19:01']
                  theory_start=part[2:]
+                 # ['08:00', '09:00', '10:00', '11:00', '12:00', '-', 'Lunch', '14:00', '15:00', '16:00', '17:00', '18:00', '18:51', '19:01']
+
 
             elif part[0]=='End' and not theory_end:
-                 # ['08:50', '09:50', '10:50', '11:50', '12:50', '-', 'Lunch', '14:50', '15:50', '16:50', '17:50', '18:50', '19:00', '19:50']
                  theory_end=part[1:]
+                 # ['08:50', '09:50', '10:50', '11:50', '12:50', '-', 'Lunch', '14:50', '15:50', '16:50', '17:50', '18:50', '19:00', '19:50']
 
             elif part[0]=='LAB' and part[1]=='Start':
-                 # ['Start', '08:00', '08:51', '09:51', '10:41', '11:40', '12:31', 'Lunch', '14:00', '14:51', '15:51', '16:41', '17:40', '18:31', '-']
                  lab_start=part[2:]
+                 # ['08:00', '08:51', '09:51', '10:41', '11:40', '12:31', 'Lunch', '14:00', '14:51', '15:51', '16:41', '17:40', '18:31', '-']
 
             elif part[0]=='End' and not lab_end:
-                 # ['08:50', '09:40', '10:40', '11:30', '12:30', '13:20', 'Lunch', '14:50', '15:40', '16:40', '17:30', '18:30', '19:20', '-']
                  lab_end=part[1:]
+                 # ['08:50', '09:40', '10:40', '11:30', '12:30', '13:20', 'Lunch', '14:50', '15:40', '16:40', '17:30', '18:30', '19:20', '-']
 
             if part[0] in ['MON','TUE','WED','THU','FRI','SAT','SUN']:
                  day=part[0]
@@ -98,53 +100,85 @@ def parser_check():
           if start not in ['Lunch','-'] and end not in ['Lunch','-']:
                lab_timing.append({'start':start,'end':end})
 
-        column_id=0
-        for slot in theory_timing:
-          db.session.add(Time(user_id, column_id, slot['start'], slot['end'], 'ETH'))
-          column_id+=1
-        db.session.commit()
 
         column_id=0
-        for slot in lab_timing:
-          db.session.add(Time(user_id, column_id, slot['start'], slot['end'], 'ELA'))
-          column_id+=1
-        db.session.commit()
+        try:
+          for slot_theory, slot_lab in zip(theory_timing,lab_timing):
+               db.session.add(Time(user_id, column_id, slot_theory['start'], slot_theory['end'], 'ETH'))
+               db.session.add(Time(user_id, column_id, slot_lab['start'], slot_lab['end'], 'ELA'))
+               column_id+=1
+
+        except SQLAlchemyError as e:
+      # Rollback for other database errors
+          db.session.rollback()
+          flash(f'An error occurred: {str(e)}')
+          register_error_handlers.server_error()
+
+        except IntegrityError:
+          # Rollback session in case of database integrity error
+          db.session.rollback()
+          flash('Integrity error occurred. Please check your data.')
+          register_error_handlers.server_error()
+
 
 #-------------------------------------------------------------------------------------
 
         for day in theory:
           column_id=0
-          for part in theory[day]:
-               if part.count('-')>1:
-                    
-                    parts=part.split('-')
-                    # db.session.add(Slot(slot_id=parts[0], day=day))
-                    # db.session.commit()
-                    db.session.add(Classes(user_id, parts[1], parts[2], day, column_id, parts[0], role))
-                    continue
-               
-               # db.session.add(Slot(slot_id=part, day=day))
-               # db.session.commit()
-               column_id+=1
+          try:
+               for part in theory[day]:
+                    if part.count('-')>1:
+                         
+                         parts=part.split('-')
+                         db.session.add(Classes(user_id, parts[1], parts[2], day, column_id, parts[0]))
+                    column_id+=1
+
+          except SQLAlchemyError as e:
+          # Rollback for other database errors
+               db.session.rollback()
+               flash(f'An error occurred: {str(e)}')
+               register_error_handlers.server_error()
+
+          except IntegrityError:
+               # Rollback session in case of database integrity error
+               db.session.rollback()
+               flash('Integrity error occurred. Please check your data.')
+               register_error_handlers.server_error()
+
+
         db.session.commit()
+
+               
 
         for day in lab:
           column_id=0
-          for part in lab[day]:
-               if part.count('-')>1:  
-                    parts=part.split('-')
-                    # db.session.add(Slot(slot_id=parts[0], day=day))
-                    # db.session.commit()
-                    if parts[2]=='LO':
-                         db.session.add(Classes(user_id, parts[1],'ELA', day, column_id, parts[0], role))
-                         continue
-                    else:
-                         db.session.add(Classes(user_id, parts[1], parts[2], day, column_id, parts[0], role))
-                         continue
-               # db.session.add(Slot(slot_id=part, day=day))
-               # db.session.commit()
-               column_id+=1
+          try:
+               for part in lab[day]:
+                    if part.count('-')>1:  
+                         parts=part.split('-')
+
+
+                         if parts[2]=='LO':
+                              db.session.add(Classes(user_id, parts[1],'ELA', day, column_id, parts[0]))
+                         else:
+                              db.session.add(Classes(user_id, parts[1], parts[2], day, column_id, parts[0]))
+                              
+          except SQLAlchemyError as e:
+          # Rollback for other database errors
+               db.session.rollback()
+               flash(f'An error occurred: {str(e)}')
+               register_error_handlers.server_error()
+
+          except IntegrityError:
+               # Rollback session in case of database integrity error
+               db.session.rollback()
+               flash('Integrity error occurred. Please check your data.')
+               register_error_handlers.server_error()
+
+
         db.session.commit()
+
+
 
 
 

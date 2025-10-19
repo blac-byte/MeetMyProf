@@ -1,7 +1,6 @@
 # app/services/schedule.py
 
 from app import db
-from flask_login import current_user
 from ..models import Classes, Time,User
 from sqlalchemy.orm import aliased
 from sqlalchemy import and_
@@ -10,8 +9,6 @@ from flask import session
 import json
 
 def get_todays_schedule():
-    user_id=current_user.get_id()
-    print(user_id)
     today = date.today()
     abbreviated_day_name = today.strftime("%a").upper()
 
@@ -34,7 +31,7 @@ def get_todays_schedule():
         .all()
     )
 
-    print(query_result)
+
 
     formatted_sessions = [
         {"start": start, "end": end, "course_code": code}
@@ -44,4 +41,5 @@ def get_todays_schedule():
 
     session["schedule"] = formatted_sessions
     session["abbreviated_day_name"] = abbreviated_day_name
+    
     return
