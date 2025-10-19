@@ -29,12 +29,12 @@ def get_todays_schedule(user_id):
 
 
     grouped_schedule = defaultdict(list)
-    for day, start, end, course_type in query_result:
+    for day, start, end, course_code in query_result:
         grouped_schedule[day].append({
             'day': day,
             'start': start,
             'end': end,
-            'course_code': course_type
+            'course_code': course_code
         })
     
 

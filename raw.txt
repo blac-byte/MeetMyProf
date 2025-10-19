@@ -42,31 +42,8 @@ SUN	THEORY	V10	Y11	Y12	X11	X12	-	Lunch	Y21	Z21	X21	W21	W22	-	V11
 LAB	L83	L84	L85	L86	L87	L88	Lunch	L89	L90	L91	L92	L93	L94	-
 
 
-{'MON': [{'day': 'MON', 'start': '15:00', 'end': '15:50', 'course_type': 'BAEEE101'}, 
-{'day': 'MON', 'start': '17:00', 'end': '17:50', 'course_type': 'BACSE103'}, 
-{'day': 'MON', 'start': '18:00', 'end': '18:50', 'course_type': 'BAMAT101'}, 
-{'day': 'MON', 'start': '18:51', 'end': '19:00', 'course_type': 'BACHY105'}, 
-{'day': 'MON', 'start': '09:51', 'end': '10:40', 'course_type': 'BAMAT101'}, 
-{'day': 'MON', 'start': '10:41', 'end': '11:30', 'course_type': 'BAMAT101'}], 
-
-'TUE': [{'day': 'TUE', 'start': '15:00', 'end': '15:50', 'course_type': 'BAMAT101'}, 
-{'day': 'TUE', 'start': '16:00', 'end': '16:50', 'course_type': 'BACHY105'}, 
-{'day': 'TUE', 'start': '08:00', 'end': '08:50', 'course_type': 'BACSE101'}, 
-{'day': 'TUE', 'start': '08:51', 'end': '09:40', 'course_type': 'BACSE101'}], 
-
-'WED': [{'day': 'WED', 'start': '16:00', 'end': '16:50', 'course_type': 'BAEEE101'}, 
-{'day': 'WED', 'start': '18:00', 'end': '18:50', 'course_type': 'BACSE103'}, 
-{'day': 'WED', 'start': '08:00', 'end': '08:50', 'course_type': 'BACHY105'}, 
-{'day': 'WED', 'start': '08:51', 'end': '09:40', 'course_type': 'BACHY105'}, 
-{'day': 'WED', 'start': '09:51', 'end': '10:40', 'course_type': 'BACSE103'}, 
-{'day': 'WED', 'start': '10:41', 'end': '11:30', 'course_type': 'BACSE103'}], 
-
-'THU': [{'day': 'THU', 'start': '15:00', 'end': '15:50', 'course_type': 'BACSE103'}, 
-{'day': 'THU', 'start': '16:00', 'end': '16:50', 'course_type': 'BAMAT101'}, 
-{'day': 'THU', 'start': '17:00', 'end': '17:50', 'course_type': 'BACHY105'}], 
-
-'FRI': [{'day': 'FRI', 'start': '17:00', 'end': '17:50', 'course_type': 'BAEEE101'}, 
-{'day': 'FRI', 'start': '08:00', 'end': '08:50', 'course_type': 'BAEEE101'}, 
-{'day': 'FRI', 'start': '08:51', 'end': '09:40', 'course_type': 'BAEEE101'}, 
-{'day': 'FRI', 'start': '09:51', 'end': '10:40', 'course_type': 'BACSE101'}, 
-{'day': 'FRI', 'start': '10:41', 'end': '11:30', 'course_type': 'BACSE101'}]}
+{('MON', '15:00', '15:50'): 'BAEEE101', ('MON', '17:00', '17:50'): 'BACSE103', ('MON', '18:00', '18:50'): 'BAMAT101', ('MON', '18:51', '19:00'): 'BACHY105', ('MON', '09:51', '10:40'): 'BAMAT101', ('MON', '10:41', '11:30'): 'BAMAT101'}
+{('TUE', '15:00', '15:50'): 'BAMAT101', ('TUE', '16:00', '16:50'): 'BACHY105', ('TUE', '08:00', '08:50'): 'BACSE101', ('TUE', '08:51', '09:40'): 'BACSE101'}
+{('WED', '16:00', '16:50'): 'BAEEE101', ('WED', '18:00', '18:50'): 'BACSE103', ('WED', '08:00', '08:50'): 'BACHY105', ('WED', '08:51', '09:40'): 'BACHY105', ('WED', '09:51', '10:40'): 'BACSE103', ('WED', '10:41', '11:30'): 'BACSE103'}
+{('THU', '15:00', '15:50'): 'BACSE103', ('THU', '16:00', '16:50'): 'BAMAT101', ('THU', '17:00', '17:50'): 'BACHY105'}
+{('FRI', '17:00', '17:50'): 'BAEEE101', ('FRI', '08:00', '08:50'): 'BAEEE101', ('FRI', '08:51', '09:40'): 'BAEEE101', ('FRI', '09:51', '10:40'): 'BACSE101', ('FRI', '10:41', '11:30'): 'BACSE101'}

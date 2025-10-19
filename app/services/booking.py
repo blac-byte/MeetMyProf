@@ -1,12 +1,9 @@
 # app/services/booking.py
 
 from flask import request, Blueprint, render_template
-from flask_login import login_required, current_user
-from ..models import Student, Teacher, Course, Time, Classes, Slot, User
+from flask_login import login_required
+from ..models import Teacher
 from app import db
-from ..models import Classes, Time,User
-from sqlalchemy.orm import aliased
-from sqlalchemy import and_ 
 from .schedule import get_todays_schedule
 
 bp=Blueprint('booking', __name__)
@@ -54,14 +51,17 @@ def booking():
 
         all_days=['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
 
-        for i in teacher_week_table:
-            booked_dict = { (slot['day'], slot['start'], slot['end']): slot['course_code'] for slot in teacher_week_table[i] }
+        booked_dict = {}
+        for day, slots in teacher_week_table.items():
+            for slot in slots:
+                booked_dict[(slot['day'], slot['start'], slot['end'])] = slot['course_code']
 
         timetable_grid = []
         for day in all_days:
             row = []
             for slot in all_slots:
                 course = booked_dict.get((day, slot['start'], slot['end']), "")
+                print(1,course)
                                                     
                 row.append({
                     'start': slot['start'],
