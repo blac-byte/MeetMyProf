@@ -101,24 +101,24 @@ def parser_check():
                lab_timing.append({'start':start,'end':end})
 
 
-        column_id=0
-        try:
-          for slot_theory, slot_lab in zip(theory_timing,lab_timing):
-               db.session.add(Time(user_id, column_id, slot_theory['start'], slot_theory['end'], 'ETH'))
-               db.session.add(Time(user_id, column_id, slot_lab['start'], slot_lab['end'], 'ELA'))
-               column_id+=1
+     #    column_id=0
+     #    try:
+     #      for slot_theory, slot_lab in zip(theory_timing,lab_timing):
+     #           db.session.add(Time(user_id, column_id, slot_theory['start'], slot_theory['end'], 'ETH'))
+     #           db.session.add(Time(user_id, column_id, slot_lab['start'], slot_lab['end'], 'ELA'))
+     #           column_id+=1
 
-        except SQLAlchemyError as e:
-      # Rollback for other database errors
-          db.session.rollback()
-          flash(f'An error occurred: {str(e)}')
-          register_error_handlers.server_error()
+     #    except SQLAlchemyError as e:
+     #  # Rollback for other database errors
+     #      db.session.rollback()
+     #      flash(f'An error occurred: {str(e)}')
+     #      register_error_handlers.server_error()
 
-        except IntegrityError:
-          # Rollback session in case of database integrity error
-          db.session.rollback()
-          flash('Integrity error occurred. Please check your data.')
-          register_error_handlers.server_error()
+     #    except IntegrityError:
+     #      # Rollback session in case of database integrity error
+     #      db.session.rollback()
+     #      flash('Integrity error occurred. Please check your data.')
+     #      register_error_handlers.server_error()
 
 
 #-------------------------------------------------------------------------------------
@@ -162,7 +162,8 @@ def parser_check():
                               db.session.add(Classes(user_id, parts[1],'ELA', day, column_id, parts[0]))
                          else:
                               db.session.add(Classes(user_id, parts[1], parts[2], day, column_id, parts[0]))
-                              
+                    column_id+=1
+
           except SQLAlchemyError as e:
           # Rollback for other database errors
                db.session.rollback()

@@ -15,14 +15,17 @@ def booking():
     if request.method=='POST':
         teacher_name=request.form.get('teacher_name')
         department=request.form.get('department')
+        department=department if department else None
 
-        teacher_id=db.session.query(User.id).filter_by(name=teacher_name, role='teacher').first()
+        teacher_id=db.session.query(Teacher.user_id).filter_by(name=teacher_name, department=department).first()
+        teacher_id=int(teacher_id[0]) if teacher_id else None
 
-        if teacher_id:
-            teacher_id=teacher_id[0]
-            teacher_schedule = get_todays_schedule(teacher_id)
+        teacher_schedule=get_todays_schedule(teacher_id)
+        print('Bookings')
         print(teacher_schedule)
 
+
     return render_template('booking.html')
+
 
     

@@ -8,7 +8,7 @@ from datetime import date
 from flask import session
 import json
 
-def get_todays_schedule():
+def get_todays_schedule(user_id):
     today = date.today()
     abbreviated_day_name = today.strftime("%a").upper()
 
@@ -16,6 +16,8 @@ def get_todays_schedule():
     time_alias = aliased(Time)
 
     # queries the db using the system date, probably change to a more accurate system later
+
+    # this query function could also be used to get the teacher schedule
     query_result = (
         db.session.query(time_alias.start, time_alias.end, Classes.course_id)
         .select_from(User)
@@ -26,12 +28,12 @@ def get_todays_schedule():
         ))
         .filter(    
             User.id == int(user_id),
-            Classes.day == abbreviated_day_name
+            Classes.day == "MON"
         )
         .all()
     )
 
-
+    print(query_result)
 
     formatted_sessions = [
         {"start": start, "end": end, "course_code": code}
@@ -42,4 +44,4 @@ def get_todays_schedule():
     session["schedule"] = formatted_sessions
     session["abbreviated_day_name"] = abbreviated_day_name
     
-    return
+    return formatted_sessions
