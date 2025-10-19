@@ -28,15 +28,14 @@ def get_todays_schedule(user_id):
         ))
         .filter(    
             User.id == int(user_id),
-            Classes.day == "MON"
+            Classes.day == abbreviated_day_name
         )
         .all()
     )
 
-    print(query_result)
 
     formatted_sessions = [
-        {"start": start, "end": end, "course_code": code}
+        {"day": abbreviated_day_name, "start": start, "end": end, "course_code": code}
         for start, end, code in query_result
     ]
 

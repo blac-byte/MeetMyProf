@@ -1,28 +1,110 @@
 {% extends 'base.html' %}
+
 {% block head %}
 <title>Booking</title>
-{% endblock %}
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+        text-align: center;
+    }
 
+    th, td {
+        border: 1px solid #ccc;
+        padding: 8px;
+    }
+
+    th {
+        background-color: #f0f0f0;
+    }
+
+    .booked {
+        background-color: #ffb3b3;
+        cursor: not-allowed;
+    }
+
+    .available {
+        background-color: #d6f5d6;
+        cursor: pointer;
+    }
+
+    .slot:hover.available {
+        background-color: #b3ffb3;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
 
-    <div class="container">
-        <h2 class="title">BOOK A MEETING</h2>
-        <hr class="divider">
-    
-        <form method="POST" action="#" class="booking-form">
-            <input type="text" name="teacher_name" placeholder="TEACHER NAME" class="input-field" required>
-            <style>
-                input:focus::placeholder {color: transparent;}
-            </style>
-            <input type="text" name="department" placeholder="DEPARTMENT" class="input-field" required>
-            <style>
-                input:focus::placeholder {color: transparent;}
-            </style>
-            <button type="submit" class="btn">SEARCH</button>
-        </form>
-    
-    </div>
+<div class="container">
+    <h2 class="title">BOOK A MEETING</h2>
+    <hr class="divider">
 
+    <form method="POST" action="#" class="booking-form">
+        <input type="text" name="teacher_name" placeholder="TEACHER NAME" class="input-field" required>
+        <style> input:focus::placeholder {color: transparent;} </style>
+
+        <input type="text" name="department" placeholder="DEPARTMENT" class="input-field">
+        <style> input:focus::placeholder {color: transparent;} </style>
+
+        <button type="submit" class="btn">SEARCH</button>
+    </form>
+</div>
+
+{% if timetable %}
+<div class="container">
+    <h2 class="title">AVAILABLE SLOTS</h2>
+    <hr class="divider">
+
+    <table>
+        <thead>
+            <tr>
+                <th>Time Slot</th>
+                {% for day_column in timetable %}
+                    <th>{{ day_column.day }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for slot_index in range(all_slots|length) %}
+                {% set slot_time = all_slots[slot_index] %}
+                <tr>
+                    <td>{{ slot_time.start }} - {{ slot_time.end }}</td>
+                    {% for day_column in timetable %}
+                        {% set slot = day_column.slots[slot_index] %}
+                        <td
+                            class="slot {{ 'booked' if slot.course_code else 'available' }}"
+                            data-day="{{ slot.day }}"
+                            data-start="{{ slot.start }}"
+                            data-end="{{ slot.end }}"
+                            onclick="handleSlotClick(this)"
+                        >
+                            {{ slot.course_code if slot.course_code else 'Available' }}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<script>
+    function handleSlotClick(cell) {
+        if (cell.classList.contains('booked')) {
+            alert('This slot is already booked.');
+            return;
+        }
+
+        const day = cell.dataset.day;
+        const start = cell.dataset.start;
+        const end = cell.dataset.end;
+
+        alert(`Booking request for ${day} ${start} - ${end}`);
+        // TODO: Submit via AJAX or redirect to booking form
+    }
+</script>
 
 {% endblock %}
+

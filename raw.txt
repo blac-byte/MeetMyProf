@@ -43,8 +43,3 @@ LAB	L83	L84	L85	L86	L87	L88	Lunch	L89	L90	L91	L92	L93	L94	-
 
 
 
-query to get the days schedule :
-SELECT t.start, t.end, c.course_id from student s join classes c on s.reg_id=c.reg_id join time t on t.column_id=c.column_id where c.day='MON' and c.course_type=t.course_type;
-
-
-
