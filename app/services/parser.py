@@ -3,7 +3,7 @@
 from flask import request, Blueprint, url_for, redirect, render_template, flash
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from flask_login import login_required, current_user
-from ..models import Student, Teacher, Course, Time, Classes, Slot
+from ..models import Student, Teacher, Course, Time, Classes
 from app import db
 from ..utils.errors import register_error_handlers
 

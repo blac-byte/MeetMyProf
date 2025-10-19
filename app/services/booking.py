@@ -1,6 +1,6 @@
 # app/services/parser.py
 
-from flask import request, Blueprint, url_for, redirect, render_template, session
+from flask import request, Blueprint, render_template
 from flask_login import login_required, current_user
 from ..models import Student, Teacher, Course, Time, Classes, Slot, User
 from app import db

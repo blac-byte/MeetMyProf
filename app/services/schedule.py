@@ -6,7 +6,6 @@ from sqlalchemy.orm import aliased
 from sqlalchemy import and_
 from datetime import date
 from flask import session
-import json
 
 def get_todays_schedule(user_id):
     today = date.today()
