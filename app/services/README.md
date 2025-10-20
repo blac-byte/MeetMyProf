@@ -1,32 +1,42 @@
 ## Services
-Services folder is the core of this web app. This controls all the services provided by the webapp 
+Services folder is the core of this project. This controls all the services provided by the webapp 
 - Timetable parsing
 - Schedule querying
 - Appointment booking
 
 The folder has different files
 1. parser.py
-   parser.py is the file that parses through the copy pasted timetable in the textarea.
+   parser.py is the file that parses through the copy-pasted timetable in the textarea.
    
 1. schedule.py
-   schedule.py does the query for the present day's schedule.
+   It queries the entire weeks schedule.
+   schedule.py does the query for the present day's schedule. Schedule.py is used in both dashboard.py and booking.py
    
    #### **`python`**
    ```python 
-       results = (
-        db.session.query(time_alias.start, time_alias.end, Classes.course_id)
-        .select_from(Student)
-        .join(Classes, Student.reg_id == Classes.reg_id)
+    query_result = (
+        db.session.query(Classes.day, time_alias.start, time_alias.end, Classes.course_id)
+        .select_from(User)
+        .join(Classes, User.id == Classes.user_id)
         .join(time_alias, and_(
             time_alias.column_id == Classes.column_id,
             time_alias.course_type == Classes.course_type
         ))
         .filter(    
-            Student.reg_id == int(user_id),
-            Classes.day == abbreviated_day_name
+            User.id == int(user_id)
         )
         .all()
     )
-   #### **`python`**
+
+
+    grouped_schedule = defaultdict(list)
+    for day, start, end, course_code in query_result:
+        grouped_schedule[day].append({
+            'day': day,
+            'start': start,
+            'end': end,
+            'course_code': course_code
+        })
    ```
-   results takes the present day to query the db
+1. booking.py
+   Queries the schedule of the selected teacher and formats them, then sends it to booking.html
