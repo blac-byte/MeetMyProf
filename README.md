@@ -37,19 +37,19 @@ app
 
 
 
-## Models
+## [Models](app/models/README.md)
 Models folder consists of all the database models used in the project.
 
-## Routes
+## [Routes](app/routes/README.md)
 Routes folder consists of all the routes used in the project.
 
-## Services
+## [Services](app/services/README.md)
 Services folder consists of all the services provided by the web app - booking.py, parser.py, schedule.py
 
-## Static
+## [Static](app/static/README.md)
 Static folder consists of all the css files used in the project.
 
-## Templates
+## [Templates](app/templates/README.md)
 Templates folder consists of all the html files used in the project.
 
 
