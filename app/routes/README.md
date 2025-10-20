@@ -11,10 +11,10 @@
 
 1. dashboard
    
-   Just a route to load the dashboard.html
+   Just a route to load the dashboard.html and prepare the schedule using get_todays_schedule() function.
 
 
 1. logout
    
-   Logs out user
+   Logs the current user out. Clears out the session data.
    
