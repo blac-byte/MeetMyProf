@@ -20,18 +20,12 @@ MeetMyProf is a web application designed to simplify and enhance the process of 
 ```
 app
 ├── __pycache__
-├── [models](app/models/README.md)
+├── models
 ├── routes
 ├── services
-│   ├── __pycache__
-│   ├── __init__.py
-│   ├── parser.py
-│   └── schedule.py
 ├── static
 ├── templates
 ├── utils
-├── __init__.py
-├── config.py
 ├── env
 ├── instance
 ├── .gitignore
@@ -40,7 +34,24 @@ app
 └── run.py
 ```
 
-Here is a detailed breakdown of the [Models](app/models/README.md) folder
+
+
+
+## Models
+Models folder consists of all the database models used in the project.
+
+## Routes
+Routes folder consists of all the routes used in the project.
+
+## Services
+Services folder consists of all the services provided by the web app - booking.py, parser.py, schedule.py
+
+## Static
+Static folder consists of all the css files used in the project.
+
+## Templates
+Templates folder consists of all the html files used in the project.
+
 
 
 
