@@ -1,5 +1,5 @@
 ## Models
-The models folder contains all the db tables used in the web app.
+Models folder consists of all the database models used in the project
 
 1. User
 2. Student
@@ -7,6 +7,8 @@ The models folder contains all the db tables used in the web app.
 4. Course
 5. Time
 6. Classes
+7. Booking
+8. Slot
 ---
 
 - User
@@ -46,7 +48,7 @@ The models folder contains all the db tables used in the web app.
   email - only accepts vit domain email
 ---
 - Teacher (notice the differece in the email format)
-- 
+  
   Admin controlled table. Has no write interaction from the program.
 
   
