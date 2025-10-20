@@ -46,11 +46,8 @@ Routes folder consists of all the routes used in the project.
 ## [Services](app/services/README.md)
 Services folder consists of all the services provided by the web app - booking.py, parser.py, schedule.py
 
-## [Static](app/static/README.md)
-Static folder consists of all the css files used in the project.
-
-## [Templates](app/templates/README.md)
-Templates folder consists of all the html files used in the project.
+## [Utils](app/utils/README.md)
+Utils folder takes care of error handling. It also holds the function that checks if the user is a student or a teacher.
 
 
 
