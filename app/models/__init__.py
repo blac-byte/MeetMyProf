@@ -6,6 +6,5 @@ from .classes import Classes
 from .course import Course
 from .teacher import Teacher
 from .booking import Booking
-from .slot import Slot
 
-__all__ = ["User", "Student", "Teacher", "Time", "Classes", "Course", "Booking", "Slot"]
+__all__ = ["User", "Student", "Teacher", "Time", "Classes", "Course", "Booking"]

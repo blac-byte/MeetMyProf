@@ -1,6 +1,6 @@
 # app/services/booking.py
 
-from flask import request, Blueprint, render_template
+from flask import request, Blueprint, render_template, jsonify
 from flask_login import login_required
 from ..models import Teacher
 from app import db
@@ -76,4 +76,10 @@ def booking():
     return render_template('booking.html')
 
 
-    
+#_____________________________________________________________
+@bp.route('/book_slot', methods=['POST'])
+@login_required
+def book_slot():
+    data = request.get_json()
+    # extract day, start, end, and handle booking
+    return jsonify({'success': True, 'course_code': 'MYCOURSE123'})

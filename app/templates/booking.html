@@ -61,20 +61,43 @@
 {% endif %}
 
 <script>
-    function handleSlotClick(cell) {
-        if (cell.classList.contains('booked')) {
-            alert('This slot is already booked.');
-            return;
-        }
-
-        const day = cell.dataset.day;
-        const start = cell.dataset.start;
-        const end = cell.dataset.end;
-
-        alert(`Booking request for ${day} ${start} - ${end}`);
-        // TODO: Submit via AJAX or redirect to booking form
+function handleSlotClick(cell) {
+    if (cell.classList.contains('booked')) {
+        alert('This slot is already booked.');
+        return;
     }
+
+    const day = cell.dataset.day;
+    const start = cell.dataset.start;
+    const end = cell.dataset.end;
+
+    // Send booking info to Flask backend via AJAX
+    fetch('/book_slot', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token() }}'  // If using Flask-WTF
+        },
+        body: JSON.stringify({ day, start, end })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert("Booking successful!");
+            // Optionally update UI here (e.g., mark as 'booked')
+            cell.classList.add('booked');
+            cell.textContent = data.course_code || 'Booked';
+        } else {
+            alert("Booking failed: " + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("Booking failed due to network error.");
+    });
+}
 </script>
+
 
 {% endblock %}
 

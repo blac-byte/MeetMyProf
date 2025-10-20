@@ -5,12 +5,12 @@ from .. import db
 
 class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    course_id = db.Column(db.String(20), unique=False, nullable=False)  # Changed to String and unique=False
+    course_id = db.Column(db.String(20), unique=True, nullable=False)
     course_type = db.Column(db.String(3), unique=False)
     batch = db.Column(db.String(10), unique=False)
     building = db.Column(db.String(10), unique=False, nullable=True)
     room = db.Column(db.String(10), unique=False, nullable=True)
-
+   
     def __init__(self, course_id, course_type, batch, building, room):
         self.course_id = course_id
         self.course_type = course_type
@@ -18,22 +18,22 @@ class Course(db.Model):
         self.building = building
         self.room = room
 
-    @staticmethod
-    def insert_sample_courses():
-        if Course.query.first():
-            return
-        courses = [
-            Course(course_id="BAEEE101", course_type="ETH", batch='ALL03', building="PRP", room="105"),
-            Course(course_id="BACSE103", course_type="ETH", batch='ALL03', building="PRP", room="105"),
-            Course(course_id="BAMAT101", course_type="ETH", batch='ALL03', building="PRP", room="105"),
-            Course(course_id="BACHY105", course_type="ETH", batch='ALL03', building="PRP", room="105"),
-            Course(course_id="BAMAT101", course_type="ELA", batch='ALL03', building="PRP", room="445"),
-            Course(course_id="BACSE101", course_type="LO", batch='ALL03', building="PRP", room="117A"),
-            Course(course_id="BACHY105", course_type="ELA", batch='ALL03', building="PRP", room="G07"),
-            Course(course_id="BACSE103", course_type="ELA", batch='ALL03', building="PRP", room="356"),
-            Course(course_id="BAEEE101", course_type="ELA", batch='ALL03', building="PRP", room="355"),
-        ]
+    # @staticmethod
+    # def insert_sample_courses():
+    #     if Course.query.first():
+    #         return
+    #     courses = [
+    #         Course(course_id="BAEEE101", course_type="ETH", batch='ALL03', building="PRP", room="105"),
+    #         Course(course_id="BACSE103", course_type="ETH", batch='ALL03', building="PRP", room="105"),
+    #         Course(course_id="BAMAT101", course_type="ETH", batch='ALL03', building="PRP", room="105"),
+    #         Course(course_id="BACHY105", course_type="ETH", batch='ALL03', building="PRP", room="105"),
+    #         Course(course_id="BAMAT101", course_type="ELA", batch='ALL03', building="PRP", room="445"),
+    #         Course(course_id="BACSE101", course_type="LO", batch='ALL03', building="PRP", room="117A"),
+    #         Course(course_id="BACHY105", course_type="ELA", batch='ALL03', building="PRP", room="G07"),
+    #         Course(course_id="BACSE103", course_type="ELA", batch='ALL03', building="PRP", room="356"),
+    #         Course(course_id="BAEEE101", course_type="ELA", batch='ALL03', building="PRP", room="355"),
+    #     ]
 
-        for i in courses:
-            db.session.add(i)
-        db.session.commit()
+        # for i in courses:
+        #     db.session.add(i)
+        # db.session.commit()

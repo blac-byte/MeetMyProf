@@ -11,6 +11,7 @@ def create_app(config_class="app.config.Config"):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
+
     # Security configs
     app.config['SESSION_COOKIE_HTTPONLY'] = True
     app.config['SESSION_COOKIE_SECURE'] = True
@@ -23,10 +24,9 @@ def create_app(config_class="app.config.Config"):
 
 
     # Import models so db.create_all() knows them
-    from app.models import User, Student, Time, Course, Classes, Teacher, Booking, Slot
+    from app.models import User, Student, Time, Course, Classes, Teacher, Booking
     with app.app_context():
         db.create_all()
-        Course.insert_sample_courses() 
 
     @login_manager.user_loader
     def load_user(user_id):
