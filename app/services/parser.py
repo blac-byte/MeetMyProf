@@ -58,7 +58,24 @@ def parser_check():
                  # ['L71', 'L72', 'L73', 'L74', 'L75', 'L76', 'Lunch', 'L77', 'L78', 'L79', 'L80', 'L81', 'L82', '-']
                  # ['L83', 'L84', 'L85', 'L86', 'L87', 'L88', 'Lunch', 'L89', 'L90', 'L91', 'L92', 'L93', 'L94', '-']
 
+     #    column_id=0
+     #    try:
+     #      for slot_theory, slot_lab in zip(theory_timing,lab_timing):
+     #           db.session.add(Time(user_id, column_id, slot_theory['start'], slot_theory['end'], 'ETH'))
+     #           db.session.add(Time(user_id, column_id, slot_lab['start'], slot_lab['end'], 'ELA'))
+     #           column_id+=1
 
+     #    except SQLAlchemyError as e:
+     #  # Rollback for other database errors
+     #      db.session.rollback()
+     #      flash(f'An error occurred: {str(e)}')
+     #      register_error_handlers.server_error()
+
+     #    except IntegrityError:
+     #      # Rollback session in case of database integrity error
+     #      db.session.rollback()
+     #      flash('Integrity error occurred. Please check your data.')
+     #      register_error_handlers.server_error()
 #-------------------------------------------------------------------------------------
         commit_log=set()
         
