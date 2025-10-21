@@ -27,6 +27,8 @@ def create_app(config_class="app.config.Config"):
     from app.models import User, Student, Time, Course, Classes, Teacher, Booking
     with app.app_context():
         db.create_all()
+        Time.insert_default_time()
+        Course.insert_sample_course()
 
     @login_manager.user_loader
     def load_user(user_id):

@@ -18,22 +18,23 @@ class Course(db.Model):
         self.building = building
         self.room = room
 
-    # @staticmethod
-    # def insert_sample_courses():
-    #     if Course.query.first():
-    #         return
-    #     courses = [
-    #         Course(course_id="BAEEE101", course_type="ETH", batch='ALL03', building="PRP", room="105"),
-    #         Course(course_id="BACSE103", course_type="ETH", batch='ALL03', building="PRP", room="105"),
-    #         Course(course_id="BAMAT101", course_type="ETH", batch='ALL03', building="PRP", room="105"),
-    #         Course(course_id="BACHY105", course_type="ETH", batch='ALL03', building="PRP", room="105"),
-    #         Course(course_id="BAMAT101", course_type="ELA", batch='ALL03', building="PRP", room="445"),
-    #         Course(course_id="BACSE101", course_type="LO", batch='ALL03', building="PRP", room="117A"),
-    #         Course(course_id="BACHY105", course_type="ELA", batch='ALL03', building="PRP", room="G07"),
-    #         Course(course_id="BACSE103", course_type="ELA", batch='ALL03', building="PRP", room="356"),
-    #         Course(course_id="BAEEE101", course_type="ELA", batch='ALL03', building="PRP", room="355"),
-    #     ]
+    @staticmethod
+    def insert_sample_course():
+        """Insert default course rows if table is empty."""
+        if Course.query.first():
+            return  # Skip if data already exists
+        course = [
+            Course(course_id="BAEEE101", course_type="ETH", batch='ALL03', building="PRP", room="105"),
+            Course(course_id="BACSE103", course_type="ETH", batch='ALL03', building="PRP", room="105"),
+            Course(course_id="BAMAT101", course_type="ETH", batch='ALL03', building="PRP", room="105"),
+            Course(course_id="BACHY105", course_type="ETH", batch='ALL03', building="PRP", room="105"),
+            Course(course_id="BAMAT101", course_type="ELA", batch='ALL03', building="PRP", room="445"),
+            Course(course_id="BACSE101", course_type="LO", batch='ALL03', building="PRP", room="117A"),
+            Course(course_id="BACHY105", course_type="ELA", batch='ALL03', building="PRP", room="G07"),
+            Course(course_id="BACSE103", course_type="ELA", batch='ALL03', building="PRP", room="356"),
+            Course(course_id="BAEEE101", course_type="ELA", batch='ALL03', building="PRP", room="355"),
+        ]
 
-        # for i in courses:
-        #     db.session.add(i)
-        # db.session.commit()
+        for i in course:
+            db.session.add(i)
+        db.session.commit()

@@ -27,9 +27,8 @@ def get_todays_schedule(user_id):
         .all()
     )
 
-    print(query_result
-          
-          )
+
+
     grouped_schedule = defaultdict(list)
     for day, start, end, course_code in query_result:
         grouped_schedule[day].append({
@@ -41,6 +40,7 @@ def get_todays_schedule(user_id):
     
 
     grouped_schedule=dict(grouped_schedule)
+
     # the code below since schedule.py doesn't have any keys : 'SAT' , 'SUN'
     # and since those are blank in the actual timetable we just give placeholder values
     grouped_schedule['SAT'],grouped_schedule['SUN']=[],[]
