@@ -16,12 +16,17 @@ def dashboard():
     smol_day = today.strftime("%a").upper()
     week_table=session.get('timetable')
 
-    if week_table:
-        return render_template('dashboard.html', schedule = week_table[smol_day])
-    
     user_id=current_user.get_id()
     session['timetable']=get_todays_schedule(user_id)
-    week_table=session.get('timetable')
+    print(session.get('timetable'))
+    
+    return ('hi')
+    # if week_table:
+    #     return render_template('dashboard.html', schedule = week_table[smol_day])
+    
+    # user_id=current_user.get_id()
+    # session['timetable']=get_todays_schedule(user_id)
+    # week_table=session.get('timetable')
 
 
-    return render_template('dashboard.html', schedule = week_table[smol_day])
+    # return (render_template('dashboard.html', schedule = week_table[smol_day]))
