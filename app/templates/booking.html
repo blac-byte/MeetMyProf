@@ -44,7 +44,7 @@
                     {% for day_column in timetable %}
                         {% set slot = day_column.slots[slot_index] %}
                         <td
-                            class="slot {{ 'booked' if slot.course_code else 'available' }}"
+                            class="slot {{ slot.course_code if slot.course_code else 'available' }}"
                             data-day="{{ slot.day }}"
                             data-start="{{ slot.start }}"
                             data-end="{{ slot.end }}"
@@ -58,12 +58,13 @@
         </tbody>
     </table>
 </div>
-{% endif %}
+
 
 <script>
 function handleSlotClick(cell) {
-    if (cell.classList.contains('booked')) {
-        alert('This slot is already booked.');
+    // Only allow booking if the slot is available
+    if (cell.classList.contains("booked")) {
+        alert("This slot is already booked.");
         return;
     }
 
@@ -71,32 +72,43 @@ function handleSlotClick(cell) {
     const start = cell.dataset.start;
     const end = cell.dataset.end;
 
-    // Send booking info to Flask backend via AJAX
-    fetch('/book_slot', {
-        method: 'POST',
+    const teacherName = document.querySelector('input[name="teacher_name"]').value;
+    const department = document.querySelector('input[name="department"]').value;
+
+    if (!confirm(`Book ${day} ${start}-${end} with ${teacherName}?`)) {
+        return;
+    }
+
+    fetch("/book_slot", {
+        method: "POST",
         headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': '{{ csrf_token() }}'  // If using Flask-WTF
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify({ day, start, end })
+        body: JSON.stringify({
+            day: day,
+            start: start,
+            end: end,
+            teacher_name: teacherName,
+            department: department,
+            teacher_id: "{{ teacher_id if teacher_id else 0 }}"  // optional if available
+        }),
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert("Booking successful!");
-            // Optionally update UI here (e.g., mark as 'booked')
-            cell.classList.add('booked');
-            cell.textContent = data.course_code || 'Booked';
-        } else {
-            alert("Booking failed: " + data.message);
+            cell.textContent = "Booked";
+            cell.classList.remove("available");
+            cell.classList.add("booked");
         }
+        alert(data.message);
     })
-    .catch(error => {
-        console.error('Error:', error);
-        alert("Booking failed due to network error.");
-    });
+    .catch(err => console.error(err));
 }
 </script>
+
+
+{% endif %}
+
 
 
 {% endblock %}

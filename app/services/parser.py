@@ -128,7 +128,7 @@ def parser_check():
 
                          if unique_log not in commit_log:
                               commit_log.add(unique_log)
-                              db.session.add(Classes(user_id, parts[1], parts[2], day, column_id, parts[0]))
+                              db.session.add(Classes(user_id, parts[1], 'ETH', day, parts[3][:3], parts[3][3:], column_id, parts[0]))
 
                     if part_lab.count('-')>1:
                          
@@ -137,7 +137,7 @@ def parser_check():
                          
                          if unique_log not in commit_log:
                               commit_log.add(unique_log)
-                              db.session.add(Classes(user_id, parts[1], 'ELA', day, column_id, parts[0]))
+                              db.session.add(Classes(user_id, parts[1], 'ELA', day, parts[3][:3], parts[3][3:], column_id, parts[0]))
 
           except SQLAlchemyError as e:
           # Rollback for other database errors

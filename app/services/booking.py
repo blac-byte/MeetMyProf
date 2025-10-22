@@ -2,7 +2,7 @@
 
 from flask import request, Blueprint, render_template, jsonify
 from flask_login import login_required
-from ..models import Teacher
+from ..models import Teacher, Booking
 from app import db
 from .schedule import get_todays_schedule
 
@@ -20,6 +20,17 @@ def booking():
         teacher_id=int(teacher_id[0]) if teacher_id else None
 
         teacher_week_table=get_todays_schedule(teacher_id)
+
+
+        bookings = Booking.query.filter_by(teacher_id=teacher_id).all()
+        # Convert them into the same structure used by booked_dict
+        for b in bookings:
+            teacher_week_table.setdefault(b.day, []).append({
+                'day': b.day,
+                'start': b.start,
+                'end': b.end,
+                'course_code': 'BOOKED'  # Marker for booked meetings
+            })
 
 #__________________________________________________________________________________
         all_slots=[
@@ -71,15 +82,44 @@ def booking():
                 })
 
             timetable_grid.append({'day': day, 'slots': row})
-        return render_template('booking.html', timetable=timetable_grid, all_slots=all_slots)
+        return render_template('booking.html', timetable=timetable_grid, all_slots=all_slots,
+    teacher_id=teacher_id)
                 
     return render_template('booking.html')
 
 
-#_____________________________________________________________
+
+from flask_login import current_user
+from ..models import Booking
+
+
+
 @bp.route('/book_slot', methods=['POST'])
 @login_required
 def book_slot():
     data = request.get_json()
-    # extract day, start, end, and handle booking
-    return jsonify({'success': True, 'course_code': 'MYCOURSE123'})
+    day = data.get('day')
+    start = data.get('start')
+    end = data.get('end')
+    teacher_id = data.get('teacher_id')
+
+    # Check if already booked
+    existing = Booking.query.filter_by(
+        teacher_id=teacher_id, day=day, start=start, end=end
+    ).first()
+
+    if existing:
+        return jsonify({'success': False, 'message': 'Slot already booked'})
+
+    new_booking = Booking(
+        student_id=current_user.get_id(),
+        teacher_id=teacher_id,
+        day=day,
+        start=start,
+        end=end,
+        status='confirmed'
+    )
+    db.session.add(new_booking)
+    db.session.commit()
+
+    return jsonify({'success': True, 'message': 'Slot booked successfully!'})
