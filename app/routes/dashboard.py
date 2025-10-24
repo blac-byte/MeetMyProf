@@ -17,11 +17,11 @@ def dashboard():
     week_table=session.get('timetable')
 
     if week_table and week_table!={'SAT': [], 'SUN': []}:
-        return (render_template('dashboard.html', schedule = week_table[smol_day]))
+        return (render_template('dashboard.html', schedule = week_table[smol_day], day_name=smol_day))
     
     user_id=current_user.get_id()
     session['timetable']=get_todays_schedule(user_id)
     week_table=session.get('timetable')
 
 
-    return (render_template('dashboard.html', schedule = week_table[smol_day]))
+    return (render_template('dashboard.html', schedule = week_table[smol_day], day_name=smol_day))

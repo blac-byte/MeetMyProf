@@ -1,7 +1,7 @@
 # app/services/booking.py
 
 from flask import request, Blueprint, render_template, jsonify
-from flask_login import login_required
+from flask_login import login_required, current_user
 from ..models import Teacher, Booking
 from app import db
 from .schedule import get_todays_schedule
@@ -83,16 +83,12 @@ def booking():
 
             timetable_grid.append({'day': day, 'slots': row})
         return render_template('booking.html', timetable=timetable_grid, all_slots=all_slots,
-    teacher_id=teacher_id)
+                                teacher_id=teacher_id)
                 
     return render_template('booking.html')
 
 
-
-from flask_login import current_user
-from ..models import Booking
-
-
+#__________________________________________________________________________________
 
 @bp.route('/book_slot', methods=['POST'])
 @login_required
