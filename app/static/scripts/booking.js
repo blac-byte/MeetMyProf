@@ -1,3 +1,5 @@
+// app/static/scripts/booking.js
+
 function handleSlotClick(cell) {
     // Only allow booking if the slot is available
     if (cell.classList.contains("booked")) {
@@ -8,6 +10,9 @@ function handleSlotClick(cell) {
     const day = cell.dataset.day;
     const start = cell.dataset.start;
     const end = cell.dataset.end;
+
+    // ✅ Get teacher_id from hidden input field in your HTML
+    const teacher_id = document.querySelector('#teacher_id')?.value || 0;
 
     const teacherName = document.querySelector('input[name="teacher_name"]').value;
     const department = document.querySelector('input[name="department"]').value;
@@ -27,7 +32,7 @@ function handleSlotClick(cell) {
             end: end,
             teacher_name: teacherName,
             department: department,
-            teacher_id: "{{ teacher_id if teacher_id else 0 }}"  // optional if available
+            teacher_id: teacher_id // ✅ use the JS variable, not Jinja
         }),
     })
     .then(response => response.json())

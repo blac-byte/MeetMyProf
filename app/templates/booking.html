@@ -15,6 +15,8 @@
         <input type="text" name="teacher_name" placeholder="TEACHER NAME" class="input-field" required>
         <style> input:focus::placeholder {color: transparent;} </style>
 
+        <input type="hidden" id="teacher_id" value="{{ teacher_id or 0 }}">
+        
         <input type="text" name="department" placeholder="DEPARTMENT" class="input-field">
         <style> input:focus::placeholder {color: transparent;} </style>
 
