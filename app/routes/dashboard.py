@@ -15,7 +15,7 @@ def dashboard():
     today=date.today()
     smol_day = today.strftime("%a").upper()
     week_table=session.get('timetable')
-
+   
     if week_table and week_table!={'SAT': [], 'SUN': []}:
         return (render_template('dashboard.html', schedule = week_table[smol_day], day_name=smol_day))
     

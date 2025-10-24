@@ -6,13 +6,13 @@ from sqlalchemy.orm import aliased
 from sqlalchemy import and_
 from collections import defaultdict
 
+# this function is used for both dashboard and booking pages
 def get_todays_schedule(user_id):
     
     time_alias = aliased(Time)
 
     # queries the db for the entire week!
 
-    # this query function is used for both dashboard and booking pages
     query_result = (
         db.session.query(Classes.day, time_alias.start, time_alias.end, Classes.course_id)
         .select_from(User)
@@ -40,8 +40,9 @@ def get_todays_schedule(user_id):
 
     grouped_schedule=dict(grouped_schedule)
 
-    # the code below since schedule.py doesn't have any keys : 'SAT' , 'SUN'
-    # and since those are blank in the actual timetable we just give placeholder values
+    # the code is due to no entries for 'SAT' and 'SUN'
+    # but since the table is fed with this data they are added as
+    # placeholders
     grouped_schedule['SAT'],grouped_schedule['SUN']=[],[]
 
     return grouped_schedule 

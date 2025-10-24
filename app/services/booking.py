@@ -17,6 +17,7 @@ def booking():
         department=department if department else None
 
         teacher_id=db.session.query(Teacher.user_id).filter_by(name=teacher_name, department=department).first()
+
         teacher_id=int(teacher_id[0]) if teacher_id else None
 
         teacher_week_table=get_todays_schedule(teacher_id)
@@ -31,7 +32,7 @@ def booking():
                 'end': b.end,
                 'course_code': 'BOOKED'  # Marker for booked meetings
             })
-
+        
 #__________________________________________________________________________________
         all_slots=[
             {"start":'08:00', "end":'08:50'},
@@ -72,7 +73,6 @@ def booking():
             row = []
             for slot in all_slots:
                 course = booked_dict.get((day, slot['start'], slot['end']), "")
-                print(1,course)
                                                     
                 row.append({
                     'start': slot['start'],
