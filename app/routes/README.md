@@ -2,16 +2,37 @@
 
 **Routes folder handles most of the routes in this web app.** 
 
-1. auth
-   
-   This takes care of the user signup and signin.
-   In signin route, it first of all checks the email format to validate the email, then hashes the password and finally logs in the user.
-   In signup route, it checks with the database, finds out whether the user is a teacher or a student and logs them in.
+1. auth.py  
+   Handles user authentication
 
+Endpoints : /signup
+Methods : GET, POST
+Registers new users using their institute email.
+-Validates email format.
+
+-Hashes password before storing.
+
+-Redirects to appropriate dashboard.
+
+Endpoints : /signin
+Methods : GET, POST
+Logs in new users using their institute email.
+-Validates email format.
+
+-Hashes password and matches with the stored hashed password.
+
+-Redirects to appropriate dashboard.
+
+Notes
+
+Uses Flask-Login for session management.
+
+Returns error messages via flash() on failure.
 
 1. dashboard
-   
-   Just a route to load the dashboard.html and prepare the schedule using get_todays_schedule() function.
+   Shows the current days schedule
+Endpoints : POST
+  
 
 
 1. logout
